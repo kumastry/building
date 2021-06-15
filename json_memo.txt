@@ -1,0 +1,9 @@
+{
+  name:string,
+  height:number,
+  year:number,
+  floor:number,
+  site:string,
+  pic:string,
+  detail: {}
+}
