@@ -6,7 +6,6 @@ import pandas as pd
 import numpy as np
 
 file_path_json = './buildings.json'
-file_path_jsonl = './buildings.jsonl'
 file_path_csv = './buldings.csv'
 
 scales =["220", "200-220", "180-200", "160-180", "140-160", "120-140", "100-120", "80-100", "60-80", "60"]
@@ -20,8 +19,6 @@ print(urls)
 for url in urls:
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'lxml')
-   
-
     
     for i in soup.table.tbody.select('tr'):
         row = []
@@ -41,6 +38,8 @@ df['year'] = df['year'].replace('？年', np.nan)
 df['year'] = df['year'].fillna("-1年")
 df['year'] = df['year'].str[:-1].astype(int)
 df['year'] = df['year'].replace(-1, np.nan)
+df = df.dropna()
 
 #出力
 df.to_csv(file_path_csv,  encoding='utf_8_sig')
+df.to_json(file_path_json, force_ascii=False, orient='records')
